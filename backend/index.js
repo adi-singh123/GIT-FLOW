@@ -19,6 +19,7 @@
  const pullRepo = require("./controllers/pull.js")
  const revertRepo  = require("./controllers/revert.js");
 const { Socket } = require("dgram");
+const mainRouter = require("./routes/main.router.js")
 
 dotenv.config();
 
@@ -69,12 +70,9 @@ function serverStart(){
 
   app.use(cors({origin:"*"}));
 
-  app.get("/",(req,res)=>{
-    res.send("good");
-  })
+  app.use("/",mainRouter);
 
   let user = "test";
-
   const httpServer = http.createServer(app);
   const io = new Server(httpServer,{
     cors:{
